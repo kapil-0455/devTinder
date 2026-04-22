@@ -1,0 +1,25 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "Tiner for devs",
+  "keywords": [
+    "node",
+    "js",
+    "javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "devTinder"
+  },
+  "license": "ISC",
+  "author": "Kapil",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev" : "nodemon src/app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
