@@ -20,7 +20,7 @@ const validateSignUp = (req)=>{
 }
 
 const validateUserDataEdit = (req)=>{
-    const allwedFields = ['age' , 'gender' , 'skills' , 'description' , 'photoUrl'];
+    const allwedFields = ['firstName','lastName' ,'age' , 'gender' , 'skills' , 'description' , 'photoUrl'];
 
     const isValid = Object.keys(req.body).every((ele) => allwedFields.includes(ele))
 
