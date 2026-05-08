@@ -21,7 +21,9 @@ authRouter.post('/signUp' , async(req , res)=>{
     });
     try {
         await user.save();
-        res.send("Data saved ")
+        const token = await user.getJWT();
+        res.cookie('token' , token , { expires: new Date(Date.now() +  1 * 3600000) });
+        res.json({data : user})
     } catch (error) {
         res.status(400).send('Something went wrong' + error.message);
     }
