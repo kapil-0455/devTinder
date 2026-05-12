@@ -31,5 +31,5 @@ then(()=>{
         console.log('Server is listening at port number 7777');
     })
 }).catch((err)=>{
-    console.error("Error Occurred: " + err.message);
+    console.error("Error Occurred : " + err.message);
 })
