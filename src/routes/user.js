@@ -30,7 +30,7 @@ userRouter.get('/user/request/recived' , userAuth , async(req ,res) =>{
             data 
         })
     } catch (error) {
-        res.status(400).send('ERROR : ' + error.messages);
+        res.status(400).send('ERROR : ' + error.message);
     }
 })
 
