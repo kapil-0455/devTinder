@@ -21,8 +21,11 @@ userRouter.get('/user/request/recived' , userAuth , async(req ,res) =>{
         .skip(skip)
         .limit(limit)
 
-        const data = connectionRequest.map((row) =>{
-            return row.fromUserId;
+        const data = connectionRequest.map((row) => {
+            return {
+                ...row.fromUserId.toJSON(),
+                requestId: row._id
+            };
         })
 
         res.json({
