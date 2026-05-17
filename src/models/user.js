@@ -44,6 +44,13 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    isPremium:{
+        type: Boolean,
+        default: false
+    },
+    membershipType:{
+        type: String,
+    },
     photoUrl:{
         type : String,
         default : "https://imgs.search.brave.com/hrPEOI6ZTeAdutYXBBsEiam5Os8jkLZwAQ-quU0b-ps/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDUv/OTQ0LzE5OS9zbWFs/bC9tYWxlLWRlZmF1/bHQtcGxhY2Vob2xk/ZXItYXZhdGFyLXBy/b2ZpbGUtZ3JheS1w/aWN0dXJlLWlzb2xh/dGVkLW9uLWJhY2tn/cm91bmQtbWFuLXNp/bGhvdWV0dGUtcGlj/dHVyZS1mb3ItdXNl/ci1wcm9maWxlLWlu/LXNvY2lhbC1tZWRp/YS1mb3J1bS1jaGF0/LWdyZXlzY2FsZS1p/bGx1c3RyYXRpb24t/dmVjdG9yLmpwZw",
