@@ -51,7 +51,7 @@ paymentRouter.post('/payment/create' , userAuth , async(req ,res) =>{
 
 
 // razorpay call this route after payment is success
-// it dont have to userAuth
+// it dont have to use userAuth
 paymentRouter.post('/payment/webhook' , async(req ,res) =>{
     try {
 
@@ -88,6 +88,19 @@ paymentRouter.post('/payment/webhook' , async(req ,res) =>{
         // if you dont write this it will keep calling the api waiting for some response
         return res.status(200).json({message : "Webhook received successfully"});
         
+    } catch (error) {
+        return res.status(400).json({message : error.message});
+    }
+})
+
+
+paymentRouter.get('/premium/verify' , userAuth , async(req ,res) =>{
+    try {
+        const user = req.user;
+        if(user.isPremium){
+            return res.status(200).json({isPremium: true, message : "User is already premium"});
+        }
+        return res.status(200).json({isPremium: false, message : "User is not premium"});
     } catch (error) {
         return res.status(400).json({message : error.message});
     }
