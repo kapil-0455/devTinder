@@ -20,6 +20,7 @@ const profileRouter = require('./routes/profile')
 const requestRouter = require('./routes/requests')
 const userRouter = require('./routes/user')
 const paymentRouter = require('./routes/payment');
+const chatRouter = require('./routes/chat');
 const intializeSocket = require('./utils/socket');
 
 app.use('/' , authRouter);
@@ -27,6 +28,7 @@ app.use('/' , profileRouter);
 app.use('/' , requestRouter);
 app.use('/' , userRouter);
 app.use('/' , paymentRouter);
+app.use('/' , chatRouter);
 
 // making server for socket.io
 const server = http.createServer(app);
