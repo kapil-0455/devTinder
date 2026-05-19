@@ -2,6 +2,9 @@ const socket = require("socket.io");
 const crypto = require("crypto");
 const Chat = require("../models/chat");
 const connectionRequest = require("../models/connectionRequest");
+const User = require("../models/user");
+
+const onlineUsers = new Map();
 
 //securing your room Id
 const getSecretRoomId = ({ userId, targetUserId }) => {
@@ -25,6 +28,18 @@ const intializeSocket = (server) => {
 
       console.log(firstName + " " + "Joining room : ", roomId);
       socket.join(roomId);
+
+      socket.userId = userId;
+      socket.roomId = roomId;
+
+      const prevCount = onlineUsers.get(userId) || 0;
+      onlineUsers.set(userId, prevCount + 1);
+
+      socket.to(roomId).emit("userOnline", { userId });
+
+      if (onlineUsers.get(targetUserId) > 0) {
+          socket.emit("userOnline", { userId: targetUserId });
+      }
     });
 
     //whatever we send over there we recive that here
@@ -78,7 +93,25 @@ const intializeSocket = (server) => {
       },
     );
 
-    socket.on("disconnect", () => {});
+    socket.on("disconnect", async () => {
+        if (socket.userId) {
+            const currentCount = onlineUsers.get(socket.userId) || 0;
+            if (currentCount > 1) {
+                onlineUsers.set(socket.userId, currentCount - 1);
+            } else {
+                onlineUsers.delete(socket.userId);
+                const now = new Date();
+                try {
+                    await User.findByIdAndUpdate(socket.userId, { lastSeen: now });
+                } catch (err) {
+                    console.error("Error updating lastSeen:", err);
+                }
+                if (socket.roomId) {
+                    socket.to(socket.roomId).emit("userOffline", { userId: socket.userId, lastSeen: now });
+                }
+            }
+        }
+    });
   });
 };
 

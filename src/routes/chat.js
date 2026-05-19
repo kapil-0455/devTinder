@@ -11,7 +11,9 @@ chatRouter.get("/chat/:targetUserId" , userAuth , async(req , res)=>{
     try {
         let chat = await Chat.findOne({
             participants: {$all: [userId , targetUserId]}
-        }).populate({path :'messages.senderId' , select : 'firstName lastName'});
+        })
+        .populate({path :'messages.senderId' , select : 'firstName lastName'})
+        .populate({path: 'participants', select: 'firstName lastName lastSeen'});
 
         if(!chat){
             chat = new Chat({
@@ -19,6 +21,7 @@ chatRouter.get("/chat/:targetUserId" , userAuth , async(req , res)=>{
                 messages : []
             })
             await chat.save();
+            await chat.populate({path: 'participants', select: 'firstName lastName lastSeen'});
         }
 
         res.status(200).json({chat})

@@ -66,8 +66,10 @@ const userSchema = new mongoose.Schema({
     },
     skills:{
         type : [String]
+    },
+    lastSeen: {
+        type: Date
     }
-
 }, {timestamps : true})
 
 userSchema.methods.getJWT = async function(){
